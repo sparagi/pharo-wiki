@@ -5,6 +5,7 @@ This file will explain the goals of this project and define its boundaries.
 Pharo-wiki is a user maintained wiki on the programming language and development environment Pharo and its ecosystem.
 
 The goals of the project are to provide:
+
 - documentation on parts of Pharo that are not yet or poorly documented;
 - a centralized source of information on Pharo;
 - pointers to existing documentation;
@@ -25,6 +26,7 @@ To achieve these goals, the project is divided into the following sections:
 * [External ressources](https://github.com/pharo-open-documentation/pharo-wiki#external-ressources) - links to ressources not maintained by the wiki community but interesting to check-out.
 
 As long as they fit the goals of the wiki, the entries of this project can be:
+
 - documentation
 - tutorials
 - guides
