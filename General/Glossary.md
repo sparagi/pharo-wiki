@@ -3,40 +3,42 @@ The Pharo community uses specific vocabulary to designate object oriented concep
 
 This page aims to provide disambiguation for the words belonging to this vocabulary.
 
-## $a 
-The character a. In Pharo strings are composed of characters, a character starts with a $. For unprintable characters such as tab, just send the message to the class e.g., Character tab.
+## $a
+The character a. In Pharo strings are composed of characters. A character starts with a $. For unprintable characters such as tab, just send the character's name to the class; for example, `Character tab`.
 
 ## Binary message
-A binary message is a [message](#message) composed of special character(s) where two objects are involved (the [receiver](#receiver) and one argument), which is the reason it is call binary. This is mostly used for arithmetic, comparison, and logical operations. For example, `+` is a binary message involving the receiver and the argument in parameter.
+A binary message is a [message](#message) composed of special character(s) where two objects are involved (the [receiver](#receiver) and one argument), which is the reason it is called binary. This is mostly used for arithmetic, comparison, and logical operations. For example, `+` is a binary message.
 
 ## Bootstrap
 
 ## Browser
-The browser designate the tool for browsing and editing packages, classes and methods. In Pharo 6.1 and greater, the browser is Calypso.
+The browser designates the tool for browsing and editing packages, classes and methods. In Pharo 6.1 and greater, the browser is Calypso.
 
 ## Candidates
-In the context of a method-call the candidates are the potential classes in the system that can receive the call. This list is computed from a static analysis of the source code.
+In the context of a method call, the candidates are the potential classes in the system that can receive the call. This list is computed from a static analysis of the source code.
 
 ## Changes (file)
-The changesfile logs all source code modifications (especially all thechanges you did while programming) since the [sources file](#sources) was generated. This facilitates a per method history for diffs or reverting. It means that even if you did not manage to save the image file on a crash or you just forgot, you can recover your changes from this file. A changes file is always coupled with a image file. They work in pair.
+The changes file logs all source code modifications (including all the changes you made while programming) since the [sources file](#sources) was generated. This facilitates a per method history for diffs or reverting. It means that even if you did not save the image file before a crash, you can recover your changes from this file. A changes file is always coupled with an image file. They work as a pair.
 
 > Note: Since Pharo 5, a project called Epicea implementing a new logging system has been introduced in the system. The long term goal of Epicea is to replace the changes file, but this objective has not been reached yet.
 
-## Class-side
-The class-side of a class refers to its meta-class. This meta-class contain methods that can be send to the class directly.
-For example, `#x:y:` method (which create an instance of `Point` with arbitrary x and y coordinates) is held by the meta-class of `Point`.
+## Class side
+Each class has a meta-class that contains methods that can be sent directly to the class.
+The class side of a class is its meta-class.  
+For example, `#x:y:` method (which creates an instance of `Point` with arbitrary x and y coordinates) is held by the meta-class of `Point`.
 
 In Pharo, both `Class` and `MetaClass` understand `#classSide` method.
+The class side of a class/meta-class partnership always refers to the meta-class.
 For example:
 
 ```Smalltalk
-Point classSide. "Point class"
-Point class classSide. "Point class"
-Point includesSelector: #x:y:. "false"
-Point class includesSelector: #x:y:. "true"
+Point classSide. "Answers Point class."
+Point class classSide. "Also answers Point class."
+Point includesSelector: #x:y:. "Answers false."
+Point class includesSelector: #x:y:. "Answers true."
 ```
 
-The best way to understand what is the class-side is to have a look at `#classSide` methods implementations:
+The best way to understand the class side is to look at implementations of the `#classSide` method:
 
 ```Smalltalk
 Class>>#classSide
@@ -49,43 +51,63 @@ MetaClass>>#classSide
 ```
 
 ## Cog
-Cog is the name of the [virtual machine](#virtual-machine) used by Pharo.
+*Cog* is the name of the [virtual machine](#virtual-machine) used by Pharo.
 It is also used by other programming languages such as [Squeak](#squeak), Newspeak and Cuis.
 
 ## Context
-A *Context* represent a program execution. It will store for example the `CompiledMethod` being currently executed, the receiver and arguments of the message that invoked this `CompiledMethod`, the temporary variables, the stack of calls until this moment of the execution, ...
-In Pharo, you can use the keyword `thisContext` to interact with the current context of your code. It will return the `Context` object at the moment of the execution. This object is different at each method call.
+A *Context* represents the execution of a program. It stores the `CompiledMethod` being currently executed, the receiver and arguments of the message that invoked this `CompiledMethod`, the temporary variables, the stack of calls until this moment of the execution, ...
+In Pharo, you can use the keyword `thisContext` to interact with the current context of your code. It will return the `Context` object at the moment of the execution. This object is different each time the method is called.
 
 ## Debugger
-The *Debugger* is a tool opened by the system when an exception is raised and never get caught. This tool allows the developer to interact with the execution [context](#context) that raised the error and its previous contexts. It let the users inspect the objects present in this context and update the code to fix the bug using the execution informations as a help.
+The *Debugger* is a tool opened by the system when an exception is raised, but not caught. This tool allows the developer to interact with the execution [context](#context) that raised the error and its previous contexts. It lets the user inspect the objects present in these contexts and use the execution information to help update the code and fix the bug.
 
 ## Dispatch
-Dispatch is a technique used in object-oriented programming to delegate behavior using [polymorphism](#polymorphism). The goal is to define a concept that will changed depending on the context. For example we can have an application with commands. When we need to execute the command, instead of creating a switch/case, each object will implement its own behaviour on a method of the same name and we just need to call this method. 
+Dispatch is a technique used in object-oriented programming to delegate behavior using [polymorphism](#polymorphism). The goal is to define a concept that will change depending on the context. For example, suppose we have an application with commands. Each object can implement its own behaviour in an `execute` method, using this same method name for every command. When we need to execute a command, instead of using a switch/case, we just call this method.
 
 ## DNU
 See [DoesNotUnderstand](#doesnotunderstand).
 
 ## DoesNotUnderstand
-This name is used to designate the error that arises when a [message](#message) is sent to an object but this object does not understand it. It also happens that people use the "DNU" shortcut.
+This name designates the error that arises when a [message](#message) is sent to an object, but the object does not understand it. Sometimes people use the acronym "DNU" for this error.
 
 ## Iceberg
-*Iceberg* is git client integrated in the system since Pharo 7 (Pharo 6.1 contained a technical preview of the tool). It is a set of tools that allows one to handle git repositories directly from a Pharo image. Iceberg is the default repository manager for Pharo, allowing for smoother and faster integration of contributions, as well as better branch and version management.
+*Iceberg* is a git client integrated into the system since Pharo 7 (Pharo 6.1 contained a technical preview of the tool). It is a set of tools that allows one to handle git repositories directly from a Pharo image. Iceberg is the default repository manager for Pharo, allowing for smoother and faster integration of contributions, as well as better branch and version management.
 
 ## Image
 A Pharo image is a snapshot of Pharo memory at a given moment.
-This is the file where all objects are stored and as such it’s a cross platform format.
-An image file contains the live state of all objects of the system (including classes and compiled methods, since they are objects too) at a givenpoint.
-It can bee seen as a virtual object container.
+This is the file where all objects are stored and as such, it’s a cross-platform format that does not depend on the host operating system.
+An image file contains the live state of all objects in the system at a given point.
+This includes classes and compiled methods, since they are objects too.
+The image can be seen as a virtual object container.
 
 ## Implementors
-For a given selector in the system, implementors are classes that have a method with this selector (they implement the selector). For example the implementors of the method `#banana` are all the classes containing a method named `#banana`.
+For a given selector in the system, implementors are classes that have a method with this selector (that is, they implement the selector). For example, the implementors of the method `#banana` are all the classes containing a method named `#banana`.
 
 ## Inspector
-The *Inspector* is a Pharo tool which allows one to inspect objects, see their current state, interact with them and display specific informations depending on the object. It offers multiple views and it uses a finder as a navigation. One particular feature is that you can use the evaluator tab to enter code, and evaluating it results in opening another pane to the right.
+The *Inspector* is a Pharo tool that allows one to inspect objects, see their current state, interact with them and display specific information depending on the object. It offers multiple views and a finder for navigation. One useful feature is that you can use the evaluator tab to enter code, then evaluate it to open another pane to the right to observe the result.
 
 ## Instance
+An *instance* is an individual object in the system.  In Pharo, each instance has a class, which determines what instance variables the object holds and what messages it responds to.  Each instance can have different values in these variables, and therefore answer the same message differently.  For example, when it receives the message #name, one instance of class Dog might respond `Spot` while another responds `Lassie`.
 
-## Instance-side
+## Instance side
+Each class works as a pair with a meta-class.
+The class (the *instance side*) contains methods that can be sent to its instances, and the meta-class (the class side) contains methods that can be sent directly to the class.
+For example, #x:y: method (which creates an instance of Point with arbitrary x and y coordinates) is held by the meta-class of Point.
+
+In Pharo, both Class and MetaClass understand #classSide method. The class side of a class/meta-class partnership always refers to the meta-class. For example:
+
+Point classSide. "Answers Point class."
+Point class classSide. "Also answers Point class."
+Point includesSelector: #x:y:. "Answers false."
+Point class includesSelector: #x:y:. "Answers true."
+
+The best way to understand the class side is to look at implementations of the #classSide method:
+
+Class>>#classSide
+    ^ self class
+
+MetaClass>>#classSide
+  ^ self
 
 ## Keyword message
 A keyword message is a [message](#message) where two or more objects are involved (the [receiver](#receiver) and the arguments). A message is composed of alphanumeric characters. The arugments are injected inside the message selector and must be proceeded by a colon (`:`). For example, `between:and:` is a keyword message with a receiver and two arguments. It can be used like this: `13 between: 12 and: 14`.
@@ -139,7 +161,7 @@ The sender of a [message](#message) is the object that will send a message to an
 ## Senders
 For a given selector in the system, senders are the methods sending a message with this selector. For example, the senders of the method `#banana` are all the methods sending the message `#banana` in their code.
 
-## Sista 
+## Sista
 Sista is the name of a [virtual machine](#virtual-machine) with adaptive optimisations such as speculative inlining (it means that the Virtual machine tries to guess the type of receiver and arguments and based on this heavily optimises the code at runtime, in case of wrong guess it deoptimises the code). It showed better performance but is still currently under developement. It is not yet production ready.
 
 ## Slang
